@@ -9,6 +9,7 @@ use MyPlot\provider\MySQLProvider;
 use MyPlot\provider\PocketMoneyProvider;
 use MyPlot\provider\YAMLDataProvider;
 use MyPlot\task\ClearPlotTask;
+use MyPlot\task\FillFloorTask;
 use MyPlot\provider\DataProvider;
 use MyPlot\provider\SQLiteDataProvider;
 use MyPlot\provider\EconomyProvider;
@@ -32,7 +33,7 @@ use pocketmine\level\Level;
 use pocketmine\utils\TextFormat as TF;
 use PocketMoney\PocketMoney;
 
-use spoondetector\SpoonDetector;
+use MyPlot\spoondetector\SpoonDetector;
 
 class MyPlot extends PluginBase
 {
@@ -232,17 +233,19 @@ class MyPlot extends PluginBase
 	 * @param Plot $plot
 	 * @return bool
 	 */
-	public function teleportPlayerToPlot(Player $player, Plot $plot) : bool {
-		$plotLevel = $this->getLevelSettings($plot->levelName);
-		if ($plotLevel === null) {
-			return false;
-		}
-		$pos = $this->getPlotPosition($plot);
-		$plotSize = $plotLevel->plotSize;
-		$pos->add(floor($plotSize / 2), -1, 1);
-		$player->teleport($pos);
-		return true;
-	}
+    public function teleportPlayerToPlot(Player $player, Plot $plot) : bool{
+        $plotLevel = $this->getLevelSettings($plot->levelName);
+        if ($plotLevel === null) {
+            return false;
+        }
+        $pos = $this->getPlotPosition($plot);
+        $plotSize = $plotLevel->plotSize;
+        $pos->x += floor($plotSize / 2);
+        $pos->z -= 2;
+        $pos->y += 1;
+        $player->teleport($pos);
+        return true;
+    }
 
 	/**
 	 * Reset all the blocks inside a plot
@@ -267,6 +270,33 @@ class MyPlot extends PluginBase
 			}
 		}
 		$this->getServer()->getScheduler()->scheduleTask(new ClearPlotTask($this, $plot, $maxBlocksPerTick));
+		return true;
+	}
+    
+    
+	/**
+	 * Replaces the blocks on the top of the plot
+	 *
+	 * @api
+	 * @param Plot $plot
+	 * @param int $maxBlocksPerTick
+	 * @return bool
+	 */
+	public function floorPlot(Plot $plot, $maxBlocksPerTick = 256, $id) : bool {
+		if (!$this->isLevelLoaded($plot->levelName)) {
+			return false;
+		}
+		foreach($this->getServer()->getLevelByName($plot->levelName)->getEntities() as $entity) {
+			$plotb = $this->getPlotByPosition($entity->getPosition());
+			if($plotb != null) {
+				if($plotb === $plot) {
+					if(!$entity instanceof Player) {
+						$entity->close();
+					}
+				}
+			}
+		}
+		$this->getServer()->getScheduler()->scheduleTask(new FillFloorTask($this, $plot, $maxBlocksPerTick, $id));
 		return true;
 	}
 
@@ -414,7 +444,17 @@ class MyPlot extends PluginBase
 
 		$plotSize = $plotLevel->plotSize;
 		$pos = $this->getPlotPosition($plot);
-		$pos = new Position($pos->getFloorX() + ($plotSize / 2) + 0.5, $pos->getFloorY() + 1, $pos->getFloorZ() + ($plotSize / 2) + 0.5);
+        $pos->x += floor($plotSize / 2);
+        $pos->z += floor($plotSize / 2);
+        $pos->y += 1;
+		// if($plot->X >= 0 and $plot->Z >= 0)
+			// $pos->add(floor($plotSize / 2), 1, floor($plotSize / 2));
+		// if($plot->X < 0 and $plot->Z > 0)
+			// $pos->add(-floor($plotSize / 2), 1, floor($plotSize / 2));
+		// if($plot->X > 0 and $plot->Z < 0)
+			// $pos->add(floor($plotSize / 2), 1, -floor($plotSize / 2));
+		// if($plot->X < 0 and $plot->Z < 0)
+			// $pos->add(-floor($plotSize / 2), 1, -floor($plotSize / 2));
 
 		return $pos;
 	}

@@ -9,16 +9,42 @@ use pocketmine\level\generator\biome\Biome;
 class BiomeSubCommand extends SubCommand
 {
 	/** @var int[] $biomes */
-	private $biomes = [
+	private $biomes = [        
+		"OCEAN" => Biome::OCEAN,
 		"PLAINS" => Biome::PLAINS,
 		"DESERT" => Biome::DESERT,
 		"MOUNTAINS" => Biome::MOUNTAINS,
 		"FOREST" => Biome::FOREST,
 		"TAIGA" => Biome::TAIGA,
 		"SWAMP" => Biome::SWAMP,
-		"NETHER" => Biome::HELL,
+		"RIVER" => Biome::RIVER,
 		"HELL" => Biome::HELL,
-		"ICE" => Biome::ICE_PLAINS
+		// "END" => Biome::END,
+		// "FROZEN_OCEAN" => Biome::FROZEN_OCEAN,
+		// "FROZEN_RIVER" => Biome::FROZEN_RIVER,
+		"ICE_PLAINS" => Biome::ICE_PLAINS,
+		// "ICE_MOUNTAINS" => Biome::ICE_MOUNTAINS,
+		// "MUSHROOM_ISLAND" => Biome::MUSHROOM_ISLAND,
+		// "MUSHROOM_ISLAND_SHORE" => Biome::MUSHROOM_ISLAND_SHORE,
+		"BEACH" => Biome::BEACH,
+		// "DESERT_HILLS" => Biome::DESERT_HILLS,
+		// "FOREST_HILLS" => Biome::FOREST_HILLS,
+		// "TAIGA_HILLS" => Biome::TAIGA_HILLS,
+		"SMALL_MOUNTAINS" => Biome::SMALL_MOUNTAINS,
+		"BIRCH_FOREST" => Biome::BIRCH_FOREST,
+		// "BIRCH_FOREST_HILLS" => Biome::BIRCH_FOREST_HILLS,
+		// "ROOFED_FOREST" => Biome::ROOFED_FOREST,
+		// "COLD_TAIGA" => Biome::COLD_TAIGA,
+		// "COLD_TAIGA_HILLS" => Biome::COLD_TAIGA_HILLS,
+		// "MEGA_TAIGA" => Biome::MEGA_TAIGA,
+		// "MEGA_TAIGA_HILLS" => Biome::MEGA_TAIGA_HILLS,
+		// "EXTREME_HILLS_PLUS" => Biome::EXTREME_HILLS_PLUS,
+		// "SAVANNA" => Biome::SAVANNA,
+		// "SAVANNA_PLATEAU" => Biome::SAVANNA_PLATEAU,
+		"MESA" => Biome::MESA
+		// "MESA_PLATEAU_F" => Biome::MESA_PLATEAU_F,
+		// "MESA_PLATEAU" => Biome::MESA_PLATEAU,
+		// "VOID" => Biome::VOID
 	];
 
 	/**

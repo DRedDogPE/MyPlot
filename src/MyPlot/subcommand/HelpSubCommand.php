@@ -48,7 +48,7 @@ class HelpSubCommand extends SubCommand
 			}
 		}
 		ksort($commands, SORT_NATURAL | SORT_FLAG_CASE);
-		$commands = array_chunk($commands, $sender->getScreenLineHeight());
+		$commands = array_chunk($commands, 5);
 		/** @var SubCommand[][] $commands */
 		$pageNumber = (int) min(count($commands), $pageNumber);
 

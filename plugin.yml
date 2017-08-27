@@ -1,6 +1,6 @@
 name: MyPlot
 main: MyPlot\MyPlot
-version: 1.1.6
+version: 1.1.7
 api:
 - 3.0.0
 - 3.0.0-ALPHA7
@@ -8,7 +8,8 @@ authors:
  - Wiez
  - Exxarion
  - jasonwynn10
-description: "Plots and Protection Plugin for PMMP Servers"
+ - DRedDogPE
+description: "Plots and Protection Plugin for Genisys Servers"
 load: STARTUP
 softdepend:
 - EconomyAPI
@@ -42,6 +43,8 @@ permissions:
             myplot.command.auto:
                 default: true
             myplot.command.clear:
+                default: true
+            myplot.command.floor:
                 default: true
             myplot.command.dispose:
                 default: true

@@ -81,7 +81,7 @@ class MyPlotGenerator extends Generator
 	 * @param int $chunkX
 	 * @param int $chunkZ
 	 */
-	public function generateChunk(int $chunkX, int $chunkZ) {
+	public function generateChunk($chunkX, $chunkZ) {
 		$shape = $this->getShape($chunkX << 4, $chunkZ << 4);
 		$chunk = $this->level->getChunk($chunkX, $chunkZ);
 
@@ -180,7 +180,7 @@ class MyPlotGenerator extends Generator
 	 * @param int $chunkX
 	 * @param int $chunkZ
 	 */
-	public function populateChunk(int $chunkX, int $chunkZ) {}
+	public function populateChunk($chunkX, $chunkZ) {}
 
 	/**
 	 * @return Vector3
